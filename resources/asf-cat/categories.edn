@@ -1,0 +1,140 @@
+{
+  ; See https://www.apache.org/legal/resolved.html#category-a
+  :category-a #{
+    "Apache-1.1"
+    "Apache-2.0"
+    "PHP-3.01"
+    "MX4J"                                                   ; Non-SPDX identifier
+    "BSD-2-Clause"
+    "BSD-3-Clause"
+    "DOM4J"                                                  ; Non-SPDX identifier
+    "PostgreSQL"
+;    "EDL-1.0"                                               ; Legally equivalent to BSD-3-Clause according to SPDX
+    "MIT"
+    "ISC"
+    "SMLNJ"
+;    "CUP"                                                   ; Legally equivalent to BSD-3-Clause according to ASF
+    "ICU"
+    "NCSA"
+    "W3C"
+;    "W3C Community Contributor License Agreement"           ; Not in SPDX; not yet supported
+    "Xnet"
+    "Zlib"
+    "Libpng"
+;    "FSF autoconf license"                                  ; Not in SPDX; not yet supported
+;    "DejaVu Fonts (Bitstream Vera/Arev licenses)"           ; Not in SPDX; not yet supported
+    "AFL-3.0"
+;    "Service+Component+Architecture+Specifications"         ; Not in SPDX; not yet supported
+;    "OOXML XSD ECMA License"                                ; Not in SPDX; not yet supported
+    "MS-PL"
+;    "Creative Commons Copyright-Only Dedication"            ; Not in SPDX; not yet supported
+    "PSF-2.0"
+;    "Python Imaging Library Software License"               ; Not in SPDX; not yet supported
+    "APAFML"
+    "BSL-1.0"
+;    "License for CERN packages in COLT"                     ; Not in SPDX; not yet supported
+    "WTFPL"
+;    "The Romantic WTF public license"                       ; Not in SPDX; not yet supported
+    "Unicode-DFS-2015"
+    "Unicode-DFS-2016"
+    "ZPL-2.0"
+;    "ACE license"                                           ; Not in SPDX; not yet supported; license text is no longer available online
+    "UPL-1.0"
+;    "Open Grid Forum License"                               ; Not in SPDX; not yet supported
+;    "Google \"Additional IP Rights Grant (Patents)\" file"  ; Not in SPDX; not yet supported
+    "Unlicense"
+    "HPND"
+    "MulanPSL-2.0"
+  }
+
+  :category-a-special #{
+    "OGL-UK-3.0"                                             ; Note: provided it does not have a custom attribution notice, otherwise it becomes category-b
+    "Public domain"                                          ; Non-SPDX identifier; see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
+  }
+
+  ; See https://www.apache.org/legal/resolved.html#category-b
+  :category-b #{
+    "CDDL-1.0"
+    "CDDL-1.1"
+    "CPL-1.0"
+    "EPL-1.0"
+    "EPL-2.0"
+    "IPL-1.0"
+    "MPL-1.0"
+    "MPL-1.1"
+    "MPL-2.0"
+    "SPL-1.0"
+    "OSL-3.0"
+    "ErlPL-1.1"
+;    "UnRAR License (only for unarchiving)"                                     ; Not in SPDX; not yet supported
+    "OFL-1.0"
+    "OFL-1.1"
+;    "Ubuntu Font License Version 1.0"                                          ; Not in SPDX; not yet supported
+    "IPA"
+    "Ruby"
+  }
+
+  ; See https://www.apache.org/legal/resolved.html#category-x
+  :category-x #{
+;    "Binary Code License (BCL)"                                                ; Not in SPDX; not yet supported
+;    "Intel Simplified Software License"                                        ; Not in SPDX; not yet supported
+;    "JSR-275 License"                                                          ; Not in SPDX; not yet supported
+;    "Microsoft Limited Public License"                                         ; Not in SPDX; not yet supported
+;    "Amazon Software License (ASL)"                                            ; Not in SPDX; not yet supported
+;    "Java SDK for Satori RTM license"                                          ; Not in SPDX; not yet supported
+;    "Redis Source Available License (RSAL)"                                    ; Not in SPDX; not yet supported
+;    "Booz Allen Public License"                                                ; Not in SPDX; not yet supported
+;    "Confluent Community License Version 1.0"                                  ; Not in SPDX; not yet supported
+;    "Any license including the Commons Clause License Condition v1.0"          ; Not in SPDX; not yet supported
+;    "Creative Commons Non-Commercial variants"                                 ; Handled via a special case in the code
+;    "Sun Community Source License 3.0"                                         ; Not in SPDX; not yet supported
+    "GPL-1.0"
+    "GPL-1.0-only"
+    "GPL-2.0"
+    "GPL-2.0+"
+    "GPL-2.0-only"
+    "GPL-2.0-or-later"
+    "GPL-2.0-with-autoconf-exception"
+    "GPL-2.0-with-bison-exception"
+    "GPL-2.0-with-classpath-exception"
+    "GPL-2.0-with-font-exception"
+    "GPL-2.0-with-GCC-exception"
+    "GPL-3.0"
+    "GPL-3.0+"
+    "GPL-3.0-only"
+    "GPL-3.0-or-later"
+    "GPL-3.0-with-autoconf-exception"
+    "GPL-3.0-with-GCC-exception"
+    "AGPL-1.0"                                                                  ; Note this license is not related to the GNU AGPL
+    "AGPL-1.0-only"                                                             ; Note this license is not related to the GNU AGPL
+    "AGPL-1.0-or-later"                                                         ; Note this license is not related to the GNU AGPL
+    "AGPL-3.0"
+    "AGPL-3.0-only"
+    "AGPL-3.0-or-later"
+    "LGPL-2.0"
+    "LGPL-2.0+"
+    "LGPL-2.0-only"
+    "LGPL-2.0-or-later"
+    "LGPL-2.1"
+    "LGPL-2.1+"
+    "LGPL-2.1-only"
+    "LGPL-2.1-or-later"
+    "LGPL-3.0"
+    "LGPL-3.0+"
+    "LGPL-3.0-only"
+    "LGPL-3.0-or-later"
+    "QPL-1.0"
+    "Sleepycat"
+    "SSPL-1.0"
+    "CPOL-1.02"
+    "BSD-4-Clause"
+    "BSD-4-Clause-Shortened"
+    "BSD-4-Clause-UC"
+;    "Facebook BSD+Patents license"                                             ; Not in SPDX; not yet supported
+    "NPL-1.0"
+    "NPL-1.1"
+;    "The Solipsistic Eclipse Public License"                                   ; Not in SPDX; not yet supported
+;    "The \"Don't Be A Dick\" Public License"                                   ; Not in SPDX; not yet supported
+    "JSON"
+  }
+}
