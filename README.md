@@ -21,19 +21,16 @@ A micro library that provides a Clojure implementation of the [Apache Software F
 
 ### Dependency
 
-Express the correct maven dependencies in your `deps.edn`, for a build tool alias:
+Express the correct maven dependencies in your `deps.edn`:
 
 ```edn
-  :aliases
-    :build
-      {:deps       {com.github.pmonks/asf-cat {:mvn/version "LATEST_CLOJARS_VERSION"}}
-       :ns-default your.build.ns}
+{:deps {com.github.pmonks/asf-cat {:mvn/version "LATEST_CLOJARS_VERSION"}}}
 ```
 
 ### Require the namespace
 
 ```clojure
-(ns your.build.ns
+(ns your.ns
   (:require [asf-cat.api :as ac]))
 ```
 
