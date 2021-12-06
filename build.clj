@@ -22,6 +22,7 @@
 For more information, run:
 
 clojure -A:deps -T:build help/doc"
+  (:refer-clojure :exclude [test])
   (:require [clojure.tools.build.api :as b]
             [org.corfield.build      :as bb]
             [tools-convenience.api   :as tc]
@@ -63,6 +64,11 @@ clojure -A:deps -T:build help/doc"
   [opts]
   (bb/run-task (set-opts opts) [:outdated]))
 
+(defn test
+  "Run the tests."
+  [opts]
+  (bb/run-tests (set-opts opts)))
+
 (defn kondo
   "Run the clj-kondo linter."
   [opts]
@@ -84,10 +90,9 @@ clojure -A:deps -T:build help/doc"
   "Run the CI pipeline."
   [opts]
   (let [opts (set-opts opts)]
-;    (try (outdated opts) (catch clojure.lang.ExceptionInfo _))  ; Ignore errors since com.github.pmonks/tools-convenience from PBR is often out of date
-;    (try (check    opts) (catch clojure.lang.ExceptionInfo _))  ; Ignore errors until https://github.com/athos/clj-check/issues/4 is fixed
     (outdated opts)
     (check    opts)
+    (test     opts)
     (lint     opts)))
 
 (defn licenses

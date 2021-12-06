@@ -1,81 +1,79 @@
 {
-  ; See https://www.apache.org/legal/resolved.html#category-a
-  :category-a #{
-    "Apache-1.1"
-    "Apache-2.0"
-    "PHP-3.01"
-    "MX4J"                                                   ; Non-SPDX identifier
-    "BSD-2-Clause"
-    "BSD-3-Clause"
-    "DOM4J"                                                  ; Non-SPDX identifier
-    "PostgreSQL"
-;    "EDL-1.0"                                               ; Legally equivalent to BSD-3-Clause according to SPDX
-    "MIT"
-    "ISC"
-    "SMLNJ"
-;    "CUP"                                                   ; Legally equivalent to BSD-3-Clause according to ASF
-    "ICU"
-    "NCSA"
-    "W3C"
-;    "W3C Community Contributor License Agreement"           ; Not in SPDX; not yet supported
-    "Xnet"
-    "Zlib"
-    "Libpng"
-;    "FSF autoconf license"                                  ; Not in SPDX; not yet supported
-;    "DejaVu Fonts (Bitstream Vera/Arev licenses)"           ; Not in SPDX; not yet supported
-    "AFL-3.0"
-;    "Service+Component+Architecture+Specifications"         ; Not in SPDX; not yet supported
-;    "OOXML XSD ECMA License"                                ; Not in SPDX; not yet supported
-    "MS-PL"
-;    "Creative Commons Copyright-Only Dedication"            ; Not in SPDX; not yet supported
-    "PSF-2.0"
-;    "Python Imaging Library Software License"               ; Not in SPDX; not yet supported
-    "APAFML"
-    "BSL-1.0"
-;    "License for CERN packages in COLT"                     ; Not in SPDX; not yet supported
-    "WTFPL"
-;    "The Romantic WTF public license"                       ; Not in SPDX; not yet supported
-    "Unicode-DFS-2015"
-    "Unicode-DFS-2016"
-    "ZPL-2.0"
-;    "ACE license"                                           ; Not in SPDX; not yet supported; license text is no longer available online
-    "UPL-1.0"
-;    "Open Grid Forum License"                               ; Not in SPDX; not yet supported
-;    "Google \"Additional IP Rights Grant (Patents)\" file"  ; Not in SPDX; not yet supported
-    "Unlicense"
-    "HPND"
-    "MulanPSL-2.0"
-  }
+  ; Category A licenses - See https://www.apache.org/legal/resolved.html#category-a
+  "Apache-1.1"                         :category-a
+  "Apache-2.0"                         :category-a
+  "PHP-3.01"                           :category-a
+  "MX4J"                               :category-a                              ; Not an SPDX license-id
+  "BSD-2-Clause"                       :category-a
+  "BSD-3-Clause"                       :category-a
+  "DOM4J"                              :category-a                              ; Not an SPDX license-id
+  "PostgreSQL"                         :category-a
+;  "EDL-1.0"                                                                    ; Legally equivalent to BSD-3-Clause according to SPDX
+  "MIT"                                :category-a
+  "ISC"                                :category-a
+  "SMLNJ"                              :category-a
+;  "CUP"                                                                        ; Legally equivalent to BSD-3-Clause according to ASF
+  "ICU"                                :category-a
+  "NCSA"                               :category-a
+  "W3C"                                :category-a
+;  "W3C Community Contributor License Agreement"                                ; Not in SPDX; not yet supported
+  "Xnet"                               :category-a
+  "Zlib"                               :category-a
+  "Libpng"                             :category-a
+;  "FSF autoconf license"                                                       ; Not in SPDX; not yet supported
+;  "DejaVu Fonts (Bitstream Vera/Arev licenses)"                                ; Not in SPDX; not yet supported
+  "AFL-3.0"                            :category-a
+;  "Service+Component+Architecture+Specifications"                              ; Not in SPDX; not yet supported
+;  "OOXML XSD ECMA License"                                                     ; Not in SPDX; not yet supported
+  "MS-PL"                              :category-a
+;  "Creative Commons Copyright-Only Dedication"                                 ; Not in SPDX; not yet supported
+  "PSF-2.0"                            :category-a
+;  "Python Imaging Library Software License"                                    ; Not in SPDX; not yet supported
+  "APAFML"                             :category-a
+  "BSL-1.0"                            :category-a
+;  "License for CERN packages in COLT"                                          ; Not in SPDX; not yet supported
+  "WTFPL"                              :category-a
+;  "The Romantic WTF public license"                                            ; Not in SPDX; not yet supported
+  "Unicode-DFS-2015"                   :category-a
+  "Unicode-DFS-2016"                   :category-a
+  "ZPL-2.0"                            :category-a
+;  "ACE license"                                                                ; Not in SPDX; not yet supported; license text is no longer available online
+  "UPL-1.0"                            :category-a
+;  "Open Grid Forum License"                                                    ; Not in SPDX; not yet supported
+;  "Google \"Additional IP Rights Grant (Patents)\" file"                       ; Not in SPDX; not yet supported
+  "Unlicense"                          :category-a
+  "HPND"                               :category-a
+  "MulanPSL-2.0"                       :category-a
 
-  :category-a-special #{
-    "OGL-UK-3.0"                                             ; Note: provided it does not have a custom attribution notice, otherwise it becomes category-b
-    "Public domain"                                          ; Non-SPDX identifier; see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
-  }
 
-  ; See https://www.apache.org/legal/resolved.html#category-b
-  :category-b #{
-    "CDDL-1.0"
-    "CDDL-1.1"
-    "CPL-1.0"
-    "EPL-1.0"
-    "EPL-2.0"
-    "IPL-1.0"
-    "MPL-1.0"
-    "MPL-1.1"
-    "MPL-2.0"
-    "SPL-1.0"
-    "OSL-3.0"
-    "ErlPL-1.1"
-;    "UnRAR License (only for unarchiving)"                                     ; Not in SPDX; not yet supported
-    "OFL-1.0"
-    "OFL-1.1"
-;    "Ubuntu Font License Version 1.0"                                          ; Not in SPDX; not yet supported
-    "IPA"
-    "Ruby"
-  }
+  ; Category A licenses with caveats - See https://www.apache.org/legal/resolved.html#category-a and https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
+  "CC0-1.0"                            :category-a-special
+  "CC-PDDC"                            :category-a-special
+  "OGL-UK-3.0"                         :category-a-special                      ; Note: provided it does not have a custom attribution notice, otherwise it becomes category-b
 
-  ; See https://www.apache.org/legal/resolved.html#category-x
-  :category-x #{
+
+  ; Category B licenses - See https://www.apache.org/legal/resolved.html#category-b
+  "CDDL-1.0"                           :category-b
+  "CDDL-1.1"                           :category-b
+  "CPL-1.0"                            :category-b
+  "EPL-1.0"                            :category-b
+  "EPL-2.0"                            :category-b
+  "IPL-1.0"                            :category-b
+  "MPL-1.0"                            :category-b
+  "MPL-1.1"                            :category-b
+  "MPL-2.0"                            :category-b
+  "SPL-1.0"                            :category-b
+  "OSL-3.0"                            :category-b
+  "ErlPL-1.1"                          :category-b
+;  "UnRAR License (only for unarchiving)"                                       ; Not in SPDX; not yet supported
+  "OFL-1.0"                            :category-b
+  "OFL-1.1"                            :category-b
+;  "Ubuntu Font License Version 1.0"                                            ; Not in SPDX; not yet supported
+  "IPA"                                :category-b
+  "Ruby"                               :category-b
+
+
+  ; Category X licenses - See https://www.apache.org/legal/resolved.html#category-x
 ;    "Binary Code License (BCL)"                                                ; Not in SPDX; not yet supported
 ;    "Intel Simplified Software License"                                        ; Not in SPDX; not yet supported
 ;    "JSR-275 License"                                                          ; Not in SPDX; not yet supported
@@ -88,53 +86,52 @@
 ;    "Any license including the Commons Clause License Condition v1.0"          ; Not in SPDX; not yet supported
 ;    "Creative Commons Non-Commercial variants"                                 ; Handled via a special case in the code
 ;    "Sun Community Source License 3.0"                                         ; Not in SPDX; not yet supported
-    "GPL-1.0"
-    "GPL-1.0-only"
-    "GPL-2.0"
-    "GPL-2.0+"
-    "GPL-2.0-only"
-    "GPL-2.0-or-later"
-    "GPL-2.0-with-autoconf-exception"
-    "GPL-2.0-with-bison-exception"
-    "GPL-2.0-with-classpath-exception"
-    "GPL-2.0-with-font-exception"
-    "GPL-2.0-with-GCC-exception"
-    "GPL-3.0"
-    "GPL-3.0+"
-    "GPL-3.0-only"
-    "GPL-3.0-or-later"
-    "GPL-3.0-with-autoconf-exception"
-    "GPL-3.0-with-GCC-exception"
-    "AGPL-1.0"                                                                  ; Note this license is not related to the GNU AGPL
-    "AGPL-1.0-only"                                                             ; Note this license is not related to the GNU AGPL
-    "AGPL-1.0-or-later"                                                         ; Note this license is not related to the GNU AGPL
-    "AGPL-3.0"
-    "AGPL-3.0-only"
-    "AGPL-3.0-or-later"
-    "LGPL-2.0"
-    "LGPL-2.0+"
-    "LGPL-2.0-only"
-    "LGPL-2.0-or-later"
-    "LGPL-2.1"
-    "LGPL-2.1+"
-    "LGPL-2.1-only"
-    "LGPL-2.1-or-later"
-    "LGPL-3.0"
-    "LGPL-3.0+"
-    "LGPL-3.0-only"
-    "LGPL-3.0-or-later"
-    "QPL-1.0"
-    "Sleepycat"
-    "SSPL-1.0"
-    "CPOL-1.02"
-    "BSD-4-Clause"
-    "BSD-4-Clause-Shortened"
-    "BSD-4-Clause-UC"
+  "GPL-1.0"                            :category-x
+  "GPL-1.0-only"                       :category-x
+  "GPL-2.0"                            :category-x
+  "GPL-2.0+"                           :category-x
+  "GPL-2.0-only"                       :category-x
+  "GPL-2.0-or-later"                   :category-x
+  "GPL-2.0-with-autoconf-exception"    :category-x
+  "GPL-2.0-with-bison-exception"       :category-x
+  "GPL-2.0-with-classpath-exception"   :category-x
+  "GPL-2.0-with-font-exception"        :category-x
+  "GPL-2.0-with-GCC-exception"         :category-x
+  "GPL-3.0"                            :category-x
+  "GPL-3.0+"                           :category-x
+  "GPL-3.0-only"                       :category-x
+  "GPL-3.0-or-later"                   :category-x
+  "GPL-3.0-with-autoconf-exception"    :category-x
+  "GPL-3.0-with-GCC-exception"         :category-x
+  "AGPL-1.0"                           :category-x                              ; Note this license is not related to the GNU AGPL
+  "AGPL-1.0-only"                      :category-x                              ; Note this license is not related to the GNU AGPL
+  "AGPL-1.0-or-later"                  :category-x                              ; Note this license is not related to the GNU AGPL
+  "AGPL-3.0"                           :category-x
+  "AGPL-3.0-only"                      :category-x
+  "AGPL-3.0-or-later"                  :category-x
+  "LGPL-2.0"                           :category-x
+  "LGPL-2.0+"                          :category-x
+  "LGPL-2.0-only"                      :category-x
+  "LGPL-2.0-or-later"                  :category-x
+  "LGPL-2.1"                           :category-x
+  "LGPL-2.1+"                          :category-x
+  "LGPL-2.1-only"                      :category-x
+  "LGPL-2.1-or-later"                  :category-x
+  "LGPL-3.0"                           :category-x
+  "LGPL-3.0+"                          :category-x
+  "LGPL-3.0-only"                      :category-x
+  "LGPL-3.0-or-later"                  :category-x
+  "QPL-1.0"                            :category-x
+  "Sleepycat"                          :category-x
+  "SSPL-1.0"                           :category-x
+  "CPOL-1.02"                          :category-x
+  "BSD-4-Clause"                       :category-x
+  "BSD-4-Clause-Shortened"             :category-x
+  "BSD-4-Clause-UC"                    :category-x
 ;    "Facebook BSD+Patents license"                                             ; Not in SPDX; not yet supported
-    "NPL-1.0"
-    "NPL-1.1"
+  "NPL-1.0"                            :category-x
+  "NPL-1.1"                            :category-x
 ;    "The Solipsistic Eclipse Public License"                                   ; Not in SPDX; not yet supported
 ;    "The \"Don't Be A Dick\" Public License"                                   ; Not in SPDX; not yet supported
-    "JSON"
-  }
+  "JSON"                               :category-x
 }

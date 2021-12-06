@@ -34,7 +34,7 @@ Express the correct maven dependencies in your `deps.edn`, for a build tool alia
 
 ```clojure
 (ns your.build.ns
-  (:require [asf-cat.tasks :as lic]))
+  (:require [asf-cat.api :as ac]))
 ```
 
 ## Contributor Information
