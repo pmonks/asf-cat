@@ -31,7 +31,7 @@ Express the correct maven dependencies in your `deps.edn`:
 
 ```clojure
 (ns your.ns
-  (:require [asf-cat.api :as ac]))
+  (:require [asf-cat.api :as asf]))
 ```
 
 ## Contributor Information

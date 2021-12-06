@@ -18,7 +18,7 @@
 
 (ns asf-cat.api-test
   (:require [clojure.test :refer [deftest testing is]]
-            [asf-cat.api  :refer [category category-info category-comparator least-category]]))
+            [asf-cat.api  :refer [category category-info category-comparator ordered-categories least-category]]))
 
 (println "\n☔️ Running tests on Clojure" (clojure-version) "/ JVM" (System/getProperty "java.version"))
 
@@ -61,12 +61,19 @@
     (is (not (nil? (category-info :category-a-special))))
     (is (not (nil? (category-info :category-b))))
     (is (not (nil? (category-info :creative-commons))))
-    (is (not (nil? (category-info :category-x))))))
+    (is (not (nil? (category-info :category-x))))
+    (is (= {:name "Category B" :url "https://www.apache.org/legal/resolved.html#category-b"}
+           (category-info :category-b)))))
 
 (deftest category-comparator-test
   (testing "Sorting"
-    (is (= '(:category-a :category-a :category-a-special :category-a-special :category-b :category-b :category-x :category-x :uncategorised :uncategorised)
-            (sort-by category-comparator [:uncategorised :category-a-special :category-x :category-a :category-a :category-b :category-x :uncategorised :category-b :category-a-special])))))
+    (is (= '(:category-a :category-a :category-a-special :category-a-special :category-b :category-b :creative-commons :creative-commons :category-x :category-x :uncategorised :uncategorised)
+            (sort-by identity category-comparator [:uncategorised :creative-commons :category-a-special :category-x :category-a :category-a :category-b :category-x :uncategorised :creative-commons :category-b :category-a-special])))))
+
+(deftest ordered-categories-test
+  (testing "ordered categories"
+    (is (= (sorted-set :category-a :category-a-special :category-b :creative-commons :category-x :uncategorised)
+           ordered-categories))))
 
 (deftest least-category-test
   (testing "nil or empty license-ids"
@@ -84,6 +91,10 @@
     (is (= :uncategorised      (least-category ["GPL-2.1" "BAR"]))))
   (testing "Large list of license-ids"
     (is (= :category-a
-           (least-category [ "MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
+           (least-category ["MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
                             "MPL-1.1" "SPL-1.0" "Apache-2.0" "OSL-3.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "EPL-2.0" "LGPL-2.0"
-                            "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"])))))
+                            "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"]))))
+  (testing "List of duplicate license-ids"
+    (is (= :category-a
+           (least-category ["AGPL-3.0" "Apache-2.0" "Apache-2.0" "Apache-2.0" "AGPL-3.0" "AGPL-3.0" "Apache-2.0"
+                            "AGPL-3.0" "AGPL-3.0" "Apache-2.0"])))))
