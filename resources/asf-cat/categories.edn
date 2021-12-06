@@ -74,18 +74,18 @@
 
 
   ; Category X licenses - See https://www.apache.org/legal/resolved.html#category-x
-;    "Binary Code License (BCL)"                                                ; Not in SPDX; not yet supported
-;    "Intel Simplified Software License"                                        ; Not in SPDX; not yet supported
-;    "JSR-275 License"                                                          ; Not in SPDX; not yet supported
-;    "Microsoft Limited Public License"                                         ; Not in SPDX; not yet supported
-;    "Amazon Software License (ASL)"                                            ; Not in SPDX; not yet supported
-;    "Java SDK for Satori RTM license"                                          ; Not in SPDX; not yet supported
-;    "Redis Source Available License (RSAL)"                                    ; Not in SPDX; not yet supported
-;    "Booz Allen Public License"                                                ; Not in SPDX; not yet supported
-;    "Confluent Community License Version 1.0"                                  ; Not in SPDX; not yet supported
-;    "Any license including the Commons Clause License Condition v1.0"          ; Not in SPDX; not yet supported
-;    "Creative Commons Non-Commercial variants"                                 ; Handled via a special case in the code
-;    "Sun Community Source License 3.0"                                         ; Not in SPDX; not yet supported
+;  "Binary Code License (BCL)"                                                  ; Not in SPDX; not yet supported
+;  "Intel Simplified Software License"                                          ; Not in SPDX; not yet supported
+;  "JSR-275 License"                                                            ; Not in SPDX; not yet supported
+;  "Microsoft Limited Public License"                                           ; Not in SPDX; not yet supported
+;  "Amazon Software License (ASL)"                                              ; Not in SPDX; not yet supported
+;  "Java SDK for Satori RTM license"                                            ; Not in SPDX; not yet supported
+;  "Redis Source Available License (RSAL)"                                      ; Not in SPDX; not yet supported
+;  "Booz Allen Public License"                                                  ; Not in SPDX; not yet supported
+;  "Confluent Community License Version 1.0"                                    ; Not in SPDX; not yet supported
+;  "Any license including the Commons Clause License Condition v1.0"            ; Not in SPDX; not yet supported
+;  "Creative Commons Non-Commercial variants"                                   ; Handled via a special case in the code
+;  "Sun Community Source License 3.0"                                           ; Not in SPDX; not yet supported
   "GPL-1.0"                            :category-x
   "GPL-1.0-only"                       :category-x
   "GPL-2.0"                            :category-x
@@ -128,10 +128,10 @@
   "BSD-4-Clause"                       :category-x
   "BSD-4-Clause-Shortened"             :category-x
   "BSD-4-Clause-UC"                    :category-x
-;    "Facebook BSD+Patents license"                                             ; Not in SPDX; not yet supported
+;  "Facebook BSD+Patents license"                                               ; Not in SPDX; not yet supported
   "NPL-1.0"                            :category-x
   "NPL-1.1"                            :category-x
-;    "The Solipsistic Eclipse Public License"                                   ; Not in SPDX; not yet supported
-;    "The \"Don't Be A Dick\" Public License"                                   ; Not in SPDX; not yet supported
+;  "The Solipsistic Eclipse Public License"                                     ; Not in SPDX; not yet supported
+;  "The \"Don't Be A Dick\" Public License"                                     ; Not in SPDX; not yet supported
   "JSON"                               :category-x
 }
