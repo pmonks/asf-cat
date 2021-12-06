@@ -24,7 +24,9 @@
 
 (def ^:private categories (edn/read (java.io.PushbackReader. (io/reader (io/resource "asf-cat/categories.edn")))))
 
-(def policy-uri "https://www.apache.org/legal/resolved.html")
+(def policy-uri
+  "The URL of the Apache Software Foundation's 3rd Party License Policy"
+  "https://www.apache.org/legal/resolved.html")
 
 (defn category
   "Returns the ASF 'category' for the given license-id (which should be a SPDX license id or one of a very small number of supported non-SPDX license ids), which will be one of:
