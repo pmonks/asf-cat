@@ -53,10 +53,9 @@
     (is (= :category-a-special (category "Public domain")))))
 
 (deftest category-info-test
-  (testing "Nil, invalid, or :uncategorised category"
+  (testing "Nil or invalid category"
     (is (nil? (category-info nil)))
-    (is (nil? (category-info :invalid-category)))
-    (is (nil? (category-info :uncategorized))))
+    (is (nil? (category-info :invalid-category))))
   (testing "Non-nil category"
     (is (not (nil? (category-info :category-a))))
     (is (not (nil? (category-info :category-a-special))))
