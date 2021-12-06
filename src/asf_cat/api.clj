@@ -25,7 +25,7 @@
 (def ^:private categories (edn/read (java.io.PushbackReader. (io/reader (io/resource "asf-cat/categories.edn")))))
 
 (def policy-uri
-  "The URL of the Apache Software Foundation's 3rd Party License Policy"
+  "The URI (as a string) of the Apache Software Foundation's 3rd Party License Policy"
   "https://www.apache.org/legal/resolved.html")
 
 (defn category
