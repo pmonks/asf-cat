@@ -46,8 +46,8 @@
             (s/starts-with? license-id "CC-BY-")          :creative-commons
             :else                                         :uncategorised))))
 
-(def category-info
-  "Information on each category."
+(def ^{:arglists '([category])} category-info
+  "Returns information on a category as a map with the keys :name and :url."
   {:category-a         {:name "Category A"                :url "https://www.apache.org/legal/resolved.html#category-a"}
    :category-a-special {:name "Category A (with caveats)" :url "https://www.apache.org/legal/resolved.html#category-a"}
    :category-b         {:name "Category B"                :url "https://www.apache.org/legal/resolved.html#category-b"}
@@ -55,8 +55,8 @@
    :category-x         {:name "Category X"                :url "https://www.apache.org/legal/resolved.html#category-x"}
    :uncategorised      {:name "Uncategorised"             :url "https://www.apache.org/legal/resolved.html#criteria"}})
 
-(def category-comparator
-  "A comparator for ASF category keywords."
+(def ^:private category-order
+  "Category ordering."
   {:category-a         0
    :category-a-special 1
    :category-b         2
@@ -64,8 +64,17 @@
    :category-x         5
    :uncategorised      6})
 
+(defn category-comparator
+  "A comparator for ASF category keywords."
+  [l r]
+  (compare (get category-order l 99) (get category-order r 99)))
+
+(def ordered-categories
+  "The set of categories, ordered by category-comparator."
+  (apply (partial sorted-set-by category-comparator) (keys category-order)))
+
 (defn least-category
   "Returns the least category for the given sequence of license-ids."
   [license-ids]
   (when (seq license-ids)
-    (first (sort-by category-comparator (distinct (map category (distinct license-ids)))))))
+    (first (sort-by category-order (distinct (map category (distinct license-ids)))))))
