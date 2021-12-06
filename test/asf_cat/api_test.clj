@@ -84,6 +84,10 @@
     (is (= :uncategorised      (least-category ["GPL-2.1" "BAR"]))))
   (testing "Large list of license-ids"
     (is (= :category-a
-           (least-category [ "MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
+           (least-category ["MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
                             "MPL-1.1" "SPL-1.0" "Apache-2.0" "OSL-3.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "EPL-2.0" "LGPL-2.0"
-                            "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"])))))
+                            "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"]))))
+  (testing "List of duplicate license-ids"
+    (is (= :category-a
+           (least-category ["AGPL-3.0" "Apache-2.0" "Apache-2.0" "Apache-2.0" "AGPL-3.0" "AGPL-3.0" "Apache-2.0"
+                            "AGPL-3.0" "AGPL-3.0" "Apache-2.0"])))))
