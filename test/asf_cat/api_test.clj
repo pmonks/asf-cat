@@ -31,6 +31,8 @@
     (is (nil? (category "\t"))))
   (testing "Select SPDX license-ids"
     (is (= :category-a         (category "Apache-2.0")))
+    (is (= :category-a         (category "         Apache-2.0         ")))  ; Test whitespace
+    (is (= :category-a         (category "BSD-3-Clause")))
     (is (= :category-a-special (category "OGL-UK-3.0")))
     (is (= :category-a-special (category "CC0-1.0")))
     (is (= :category-a-special (category "CC-PDDC")))
@@ -44,8 +46,16 @@
     (is (= :creative-commons   (category "CC-BY-4.0")))
     (is (= :creative-commons   (category "CC-BY-SA-4.0")))
     (is (= :creative-commons   (category "CC-BY-ND-4.0")))
+    (is (= :category-x         (category "BSD-4-Clause")))
+    (is (= :category-x         (category "BSD-4-Clause-Shortened")))
     (is (= :category-x         (category "GPL-2.0")))
+    (is (= :category-x         (category "GPL-2.0-with-classpath-exception")))
     (is (= :category-x         (category "LGPL-2.0")))
+    (is (= :category-x         (category "LGPL-2.1")))
+    (is (= :category-x         (category "LGPL-2.1-or-later")))
+    (is (= :category-x         (category "CC-BY-NC-4.0")))
+    (is (= :category-x         (category "CC-BY-NC-SA-3.0")))
+    (is (= :category-x         (category "CC-BY-NC-SA-2.0-UK")))
     (is (= :uncategorised      (category "Beerware"))))
   (testing "Non-SPDX license-ids"
     (is (= :category-a-special (category "Public domain")))))
@@ -86,7 +96,8 @@
     (is (= :category-b         (least-category ["EPL-2.0" "GPL-3.0"])))
     (is (= :creative-commons   (least-category ["CC-BY-SA-4.0" "GPL-3.0"])))
     (is (= :category-x         (least-category ["AGPL-2.0" "GPL-3.0"])))
-    (is (= :uncategorised      (least-category ["GPL-2.1" "BAR"]))))
+    (is (= :category-x         (least-category ["GPL-2.0" "BAR"])))
+    (is (= :uncategorised      (least-category ["FOO" "BAR"]))))
   (testing "Large list of license-ids"
     (is (= :category-a
            (least-category ["MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"

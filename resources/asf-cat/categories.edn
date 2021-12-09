@@ -89,7 +89,6 @@
   "GPL-1.0"                            :category-x
   "GPL-1.0-only"                       :category-x
   "GPL-2.0"                            :category-x
-  "GPL-2.0+"                           :category-x
   "GPL-2.0-only"                       :category-x
   "GPL-2.0-or-later"                   :category-x
   "GPL-2.0-with-autoconf-exception"    :category-x
@@ -98,7 +97,6 @@
   "GPL-2.0-with-font-exception"        :category-x
   "GPL-2.0-with-GCC-exception"         :category-x
   "GPL-3.0"                            :category-x
-  "GPL-3.0+"                           :category-x
   "GPL-3.0-only"                       :category-x
   "GPL-3.0-or-later"                   :category-x
   "GPL-3.0-with-autoconf-exception"    :category-x
@@ -110,15 +108,12 @@
   "AGPL-3.0-only"                      :category-x
   "AGPL-3.0-or-later"                  :category-x
   "LGPL-2.0"                           :category-x
-  "LGPL-2.0+"                          :category-x
   "LGPL-2.0-only"                      :category-x
   "LGPL-2.0-or-later"                  :category-x
   "LGPL-2.1"                           :category-x
-  "LGPL-2.1+"                          :category-x
   "LGPL-2.1-only"                      :category-x
   "LGPL-2.1-or-later"                  :category-x
   "LGPL-3.0"                           :category-x
-  "LGPL-3.0+"                          :category-x
   "LGPL-3.0-only"                      :category-x
   "LGPL-3.0-or-later"                  :category-x
   "QPL-1.0"                            :category-x
