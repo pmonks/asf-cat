@@ -22,7 +22,7 @@
             [clojure.java.io :as io]
             [clojure.edn     :as edn]))
 
-(def ^:private categories (edn/read (java.io.PushbackReader. (io/reader (io/resource "asf-cat/categories.edn")))))
+(def ^:private category-data (edn/read (java.io.PushbackReader. (io/reader (io/resource "asf-cat/categories.edn")))))
 
 (def policy-uri
   "The URI (as a string) of the Apache Software Foundation's 3rd Party License Policy"
@@ -40,7 +40,7 @@
   :uncategorised      - the ASF category could not be determined for this license"
   [license-id]
   (when-not (s/blank? license-id)
-    (let [asf-cat (get categories (s/trim license-id))]
+    (let [asf-cat (get category-data (s/trim license-id))]
       (cond asf-cat                                       asf-cat
             (= "public domain" (s/lower-case license-id)) :category-a-special  ; Non-SPDX identifier; see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
             (s/starts-with? license-id "CC-BY-NC-")       :category-x          ; See https://www.apache.org/legal/resolved.html#category-x
@@ -57,7 +57,6 @@
    :uncategorised      {:name "Uncategorised"             :url "https://www.apache.org/legal/resolved.html#criteria"}})
 
 (def ^:private category-order
-  "Category ordering."
   {:category-a         0
    :category-a-special 1
    :category-b         2
@@ -70,7 +69,7 @@
   [l r]
   (compare (get category-order l 99) (get category-order r 99)))
 
-(def ordered-categories
+(def categories
   "The set of categories, ordered by category-comparator."
   (apply (partial sorted-set-by category-comparator) (keys category-order)))
 

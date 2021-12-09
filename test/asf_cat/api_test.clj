@@ -18,7 +18,7 @@
 
 (ns asf-cat.api-test
   (:require [clojure.test :refer [deftest testing is]]
-            [asf-cat.api  :refer [category category-info category-comparator ordered-categories least-category]]))
+            [asf-cat.api  :refer [category category-info category-comparator categories least-category]]))
 
 (println "\n☔️ Running tests on Clojure" (clojure-version) "/ JVM" (System/getProperty "java.version"))
 
@@ -78,10 +78,10 @@
     (is (= '(:category-a :category-a :category-a-special :category-a-special :category-b :category-b :creative-commons :creative-commons :category-x :category-x :uncategorised :uncategorised)
             (sort-by identity category-comparator [:uncategorised :creative-commons :category-a-special :category-x :category-a :category-a :category-b :category-x :uncategorised :creative-commons :category-b :category-a-special])))))
 
-(deftest ordered-categories-test
-  (testing "ordered categories"
+(deftest categories-test
+  (testing "Categories"
     (is (= (sorted-set :category-a :category-a-special :category-b :creative-commons :category-x :uncategorised)
-           ordered-categories))))
+           categories))))
 
 (deftest least-category-test
   (testing "nil or empty license-ids"
