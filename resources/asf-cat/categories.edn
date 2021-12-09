@@ -3,16 +3,16 @@
   "Apache-1.1"                         :category-a
   "Apache-2.0"                         :category-a
   "PHP-3.01"                           :category-a
-  "MX4J"                               :category-a                              ; Not an SPDX license-id
+;  "MX4J"                               :category-a                             ; Lgeally equivalent to Apache-1.1 according to SPDX: https://wiki.spdx.org/view/Legal_Team/License_List/Licenses_Under_Consideration#Processed_License_Requests
   "BSD-2-Clause"                       :category-a
   "BSD-3-Clause"                       :category-a
-  "DOM4J"                              :category-a                              ; Not an SPDX license-id
+;  "DOM4J"                              :category-a                             ; Legally equivalent to Plexus according to SPDX: https://spdx.org/licenses/Plexus.html
   "PostgreSQL"                         :category-a
-;  "EDL-1.0"                                                                    ; Legally equivalent to BSD-3-Clause according to SPDX
+;  "EDL-1.0"                                                                    ; Legally equivalent to BSD-3-Clause according to SPDX: https://lists.spdx.org/g/Spdx-legal/topic/request_for_adding_eclipse/67981884
   "MIT"                                :category-a
   "ISC"                                :category-a
   "SMLNJ"                              :category-a
-;  "CUP"                                                                        ; Legally equivalent to BSD-3-Clause according to ASF
+;  "CUP"                                                                        ; Legally equivalent to MIT according to ASF: https://www.apache.org/legal/resolved.html#category-a
   "ICU"                                :category-a
   "NCSA"                               :category-a
   "W3C"                                :category-a

@@ -48,8 +48,6 @@
     (is (= :category-x         (category "LGPL-2.0")))
     (is (= :uncategorised      (category "Beerware"))))
   (testing "Non-SPDX license-ids"
-    (is (= :category-a         (category "MX4J")))
-    (is (= :category-a         (category "DOM4J")))
     (is (= :category-a-special (category "Public domain")))))
 
 (deftest category-info-test
