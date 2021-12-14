@@ -41,11 +41,12 @@
   [license-id]
   (when-not (s/blank? license-id)
     (let [asf-cat (get category-data (s/trim license-id))]
-      (cond asf-cat                                       asf-cat
-            (= "public domain" (s/lower-case license-id)) :category-a-special  ; Non-SPDX identifier; see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
-            (s/starts-with? license-id "CC-BY-NC-")       :category-x          ; See https://www.apache.org/legal/resolved.html#category-x
-            (s/starts-with? license-id "CC-BY-")          :creative-commons    ; Various categories; see https://www.apache.org/legal/resolved.html#cc-by
-            :else                                         :uncategorised))))
+      (cond asf-cat                                                asf-cat
+            (= "NON-SPDX-Public-Domain" license-id)                :category-a-special  ; Non-SPDX identifier; see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
+            (= "public domain"          (s/lower-case license-id)) :category-a-special  ; ditto
+            (s/starts-with? license-id  "CC-BY-NC-")               :category-x          ; See https://www.apache.org/legal/resolved.html#category-x
+            (s/starts-with? license-id  "CC-BY-")                  :creative-commons    ; Various categories; see https://www.apache.org/legal/resolved.html#cc-by
+            :else                                                  :uncategorised))))
 
 (def ^{:arglists '([category])} category-info
   "Returns information on a category as a map with the keys :name and :url (both strings)."

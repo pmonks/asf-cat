@@ -58,7 +58,9 @@
     (is (= :category-x         (category "CC-BY-NC-SA-2.0-UK")))
     (is (= :uncategorised      (category "Beerware"))))
   (testing "Non-SPDX license-ids"
-    (is (= :category-a-special (category "Public domain")))))
+    (is (= :uncategorised      (category "NON-SPDX-JDOM")))
+    (is (= :category-a-special (category "Public domain")))
+    (is (= :category-a-special (category "NON-SPDX-Public-Domain")))))
 
 (deftest category-info-test
   (testing "Nil or invalid category"
