@@ -78,4 +78,4 @@
   "Returns the least category for the given sequence of license-ids."
   [license-ids]
   (when (seq license-ids)
-    (first (sort-by category-order (distinct (map category (distinct license-ids)))))))
+    (first (sort-by category-order (distinct (map category (distinct (seq license-ids))))))))
