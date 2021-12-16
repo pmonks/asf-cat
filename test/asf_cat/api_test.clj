@@ -18,7 +18,7 @@
 
 (ns asf-cat.api-test
   (:require [clojure.test :refer [deftest testing is]]
-            [asf-cat.api  :refer [category category-info category-comparator ordered-categories least-category]]))
+            [asf-cat.api  :refer [category category-info category-comparator categories least-category]]))
 
 (println "\n☔️ Running tests on Clojure" (clojure-version) "/ JVM" (System/getProperty "java.version"))
 
@@ -31,6 +31,8 @@
     (is (nil? (category "\t"))))
   (testing "Select SPDX license-ids"
     (is (= :category-a         (category "Apache-2.0")))
+    (is (= :category-a         (category "         Apache-2.0         ")))  ; Test whitespace
+    (is (= :category-a         (category "BSD-3-Clause")))
     (is (= :category-a-special (category "OGL-UK-3.0")))
     (is (= :category-a-special (category "CC0-1.0")))
     (is (= :category-a-special (category "CC-PDDC")))
@@ -44,13 +46,21 @@
     (is (= :creative-commons   (category "CC-BY-4.0")))
     (is (= :creative-commons   (category "CC-BY-SA-4.0")))
     (is (= :creative-commons   (category "CC-BY-ND-4.0")))
+    (is (= :category-x         (category "BSD-4-Clause")))
+    (is (= :category-x         (category "BSD-4-Clause-Shortened")))
     (is (= :category-x         (category "GPL-2.0")))
+    (is (= :category-x         (category "GPL-2.0-with-classpath-exception")))
     (is (= :category-x         (category "LGPL-2.0")))
+    (is (= :category-x         (category "LGPL-2.1")))
+    (is (= :category-x         (category "LGPL-2.1-or-later")))
+    (is (= :category-x         (category "CC-BY-NC-4.0")))
+    (is (= :category-x         (category "CC-BY-NC-SA-3.0")))
+    (is (= :category-x         (category "CC-BY-NC-SA-2.0-UK")))
     (is (= :uncategorised      (category "Beerware"))))
   (testing "Non-SPDX license-ids"
-    (is (= :category-a         (category "MX4J")))
-    (is (= :category-a         (category "DOM4J")))
-    (is (= :category-a-special (category "Public domain")))))
+    (is (= :uncategorised      (category "NON-SPDX-JDOM")))
+    (is (= :category-a-special (category "Public domain")))
+    (is (= :category-a-special (category "NON-SPDX-Public-Domain")))))
 
 (deftest category-info-test
   (testing "Nil or invalid category"
@@ -70,10 +80,10 @@
     (is (= '(:category-a :category-a :category-a-special :category-a-special :category-b :category-b :creative-commons :creative-commons :category-x :category-x :uncategorised :uncategorised)
             (sort-by identity category-comparator [:uncategorised :creative-commons :category-a-special :category-x :category-a :category-a :category-b :category-x :uncategorised :creative-commons :category-b :category-a-special])))))
 
-(deftest ordered-categories-test
-  (testing "ordered categories"
+(deftest categories-test
+  (testing "Categories"
     (is (= (sorted-set :category-a :category-a-special :category-b :creative-commons :category-x :uncategorised)
-           ordered-categories))))
+           categories))))
 
 (deftest least-category-test
   (testing "nil or empty license-ids"
@@ -88,7 +98,8 @@
     (is (= :category-b         (least-category ["EPL-2.0" "GPL-3.0"])))
     (is (= :creative-commons   (least-category ["CC-BY-SA-4.0" "GPL-3.0"])))
     (is (= :category-x         (least-category ["AGPL-2.0" "GPL-3.0"])))
-    (is (= :uncategorised      (least-category ["GPL-2.1" "BAR"]))))
+    (is (= :category-x         (least-category ["GPL-2.0" "BAR"])))
+    (is (= :uncategorised      (least-category ["FOO" "BAR"]))))
   (testing "Large list of license-ids"
     (is (= :category-a
            (least-category ["MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"

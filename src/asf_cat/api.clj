@@ -22,14 +22,14 @@
             [clojure.java.io :as io]
             [clojure.edn     :as edn]))
 
-(def ^:private categories (edn/read (java.io.PushbackReader. (io/reader (io/resource "asf-cat/categories.edn")))))
+(def ^:private category-data (edn/read (java.io.PushbackReader. (io/reader (io/resource "asf-cat/categories.edn")))))
 
 (def policy-uri
-  "The URL of the Apache Software Foundation's 3rd Party License Policy"
+  "The URI (as a string) of the Apache Software Foundation's 3rd Party License Policy"
   "https://www.apache.org/legal/resolved.html")
 
 (defn category
-  "Returns the ASF 'category' for the given license-id (which should be a SPDX license id or one of a very small number of supported non-SPDX license ids), which will be one of:
+  "Given a license-id (which should be a SPDX license id or one of a very small number of supported non-SPDX license ids), returns one of:
 
   nil                 - when license-id is nil, empty or blank
   :category-a         - see https://www.apache.org/legal/resolved.html#category-a
@@ -40,14 +40,16 @@
   :uncategorised      - the ASF category could not be determined for this license"
   [license-id]
   (when-not (s/blank? license-id)
-    (let [asf-cat (get categories license-id)]
-      (cond asf-cat                                       asf-cat
-            (= "public domain" (s/lower-case license-id)) :category-a-special  ; Non-SPDX identifier; see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
-            (s/starts-with? license-id "CC-BY-")          :creative-commons
-            :else                                         :uncategorised))))
+    (let [asf-cat (get category-data (s/trim license-id))]
+      (cond asf-cat                                                asf-cat
+            (= "NON-SPDX-Public-Domain" license-id)                :category-a-special  ; Non-SPDX identifier; see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
+            (= "public domain"          (s/lower-case license-id)) :category-a-special  ; ditto
+            (s/starts-with? license-id  "CC-BY-NC-")               :category-x          ; See https://www.apache.org/legal/resolved.html#category-x
+            (s/starts-with? license-id  "CC-BY-")                  :creative-commons    ; Various categories; see https://www.apache.org/legal/resolved.html#cc-by
+            :else                                                  :uncategorised))))
 
 (def ^{:arglists '([category])} category-info
-  "Returns information on a category as a map with the keys :name and :url."
+  "Returns information on a category as a map with the keys :name and :url (both strings)."
   {:category-a         {:name "Category A"                :url "https://www.apache.org/legal/resolved.html#category-a"}
    :category-a-special {:name "Category A (with caveats)" :url "https://www.apache.org/legal/resolved.html#category-a"}
    :category-b         {:name "Category B"                :url "https://www.apache.org/legal/resolved.html#category-b"}
@@ -56,7 +58,6 @@
    :uncategorised      {:name "Uncategorised"             :url "https://www.apache.org/legal/resolved.html#criteria"}})
 
 (def ^:private category-order
-  "Category ordering."
   {:category-a         0
    :category-a-special 1
    :category-b         2
@@ -69,7 +70,7 @@
   [l r]
   (compare (get category-order l 99) (get category-order r 99)))
 
-(def ordered-categories
+(def categories
   "The set of categories, ordered by category-comparator."
   (apply (partial sorted-set-by category-comparator) (keys category-order)))
 
