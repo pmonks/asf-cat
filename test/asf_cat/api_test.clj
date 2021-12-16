@@ -91,7 +91,7 @@
     (is (= nil (least-category [])))
     (is (= nil (least-category '())))
     (is (= nil (least-category #{}))))
-  (testing "Populated license-ids"
+  (testing "Populated license-ids (vectors)"
     (is (= :category-a         (least-category ["Apache-2.0"])))
     (is (= :category-a         (least-category ["GPL-3.0" "Apache-2.0"])))
     (is (= :category-a-special (least-category ["Public Domain" "GPL-3.0"])))
@@ -100,12 +100,21 @@
     (is (= :category-x         (least-category ["AGPL-2.0" "GPL-3.0"])))
     (is (= :category-x         (least-category ["GPL-2.0" "BAR"])))
     (is (= :uncategorised      (least-category ["FOO" "BAR"]))))
-  (testing "Large list of license-ids"
+  (testing "Populated license-ids (sets)"
+    (is (= :category-a         (least-category #{"Apache-2.0"})))
+    (is (= :category-a         (least-category #{"GPL-3.0" "Apache-2.0"})))
+    (is (= :category-a-special (least-category #{"Public Domain" "GPL-3.0"})))
+    (is (= :category-b         (least-category #{"EPL-2.0" "GPL-3.0"})))
+    (is (= :creative-commons   (least-category #{"CC-BY-SA-4.0" "GPL-3.0"})))
+    (is (= :category-x         (least-category #{"AGPL-2.0" "GPL-3.0"})))
+    (is (= :category-x         (least-category #{"GPL-2.0" "BAR"})))
+    (is (= :uncategorised      (least-category #{"FOO" "BAR"}))))
+  (testing "Large set of license-ids"
     (is (= :category-a
-           (least-category ["MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
+           (least-category #{"MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
                             "MPL-1.1" "SPL-1.0" "Apache-2.0" "OSL-3.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "EPL-2.0" "LGPL-2.0"
-                            "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"]))))
-  (testing "List of duplicate license-ids"
+                            "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"}))))
+  (testing "Vector containing duplicate license-ids"
     (is (= :category-a
            (least-category ["AGPL-3.0" "Apache-2.0" "Apache-2.0" "Apache-2.0" "AGPL-3.0" "AGPL-3.0" "Apache-2.0"
                             "AGPL-3.0" "AGPL-3.0" "Apache-2.0"])))))
