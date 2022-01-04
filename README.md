@@ -1,7 +1,7 @@
 | | | |
 |---:|:---:|:---:|
-| [**main**](https://github.com/pmonks/asf-cat/tree/main) | [![CI](https://github.com/pmonks/asf-cat/workflows/CI/badge.svg?branch=main)](https://github.com/pmonks/asf-cat/actions?query=workflow%3ACI) | [![Dependencies](https://github.com/pmonks/asf-cat/workflows/dependencies/badge.svg?branch=main)](https://github.com/pmonks/asf-cat/actions?query=workflow%3Adependencies) |
-| [**dev**](https://github.com/pmonks/asf-cat/tree/dev)  | [![CI](https://github.com/pmonks/asf-cat/workflows/CI/badge.svg?branch=dev)](https://github.com/pmonks/asf-cat/actions?query=workflow%3ACI) | [![Dependencies](https://github.com/pmonks/asf-cat/workflows/dependencies/badge.svg?branch=dev)](https://github.com/pmonks/asf-cat/actions?query=workflow%3Adependencies) |
+| [**main**](https://github.com/pmonks/asf-cat/tree/main) | [![CI](https://github.com/pmonks/asf-cat/workflows/CI/badge.svg?branch=main)](https://github.com/pmonks/asf-cat/actions?query=workflow%3ACI+branch%3Amain) | [![Dependencies](https://github.com/pmonks/asf-cat/workflows/dependencies/badge.svg?branch=main)](https://github.com/pmonks/asf-cat/actions?query=workflow%3Adependencies+branch%3Amain) |
+| [**dev**](https://github.com/pmonks/asf-cat/tree/dev) | [![CI](https://github.com/pmonks/asf-cat/workflows/CI/badge.svg?branch=dev)](https://github.com/pmonks/asf-cat/actions?query=workflow%3ACI+branch%3Adev) | [![Dependencies](https://github.com/pmonks/asf-cat/workflows/dependencies/badge.svg?branch=dev)](https://github.com/pmonks/asf-cat/actions?query=workflow%3Adependencies+branch%3Adev) |
 
 [![Latest Version](https://img.shields.io/clojars/v/com.github.pmonks/asf-cat)](https://clojars.org/com.github.pmonks/asf-cat/) [![Open Issues](https://img.shields.io/github/issues/pmonks/asf-cat.svg)](https://github.com/pmonks/asf-cat/issues) [![License](https://img.shields.io/github/license/pmonks/asf-cat.svg)](https://github.com/pmonks/asf-cat/blob/main/LICENSE)
 
