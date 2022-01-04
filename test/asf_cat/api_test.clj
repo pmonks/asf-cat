@@ -18,7 +18,7 @@
 
 (ns asf-cat.api-test
   (:require [clojure.test :refer [deftest testing is]]
-            [asf-cat.api  :refer [category category-info category-comparator categories least-category]]))
+            [asf-cat.api  :refer [category category-info category-comparator license-comparator categories least-category]]))
 
 (println "\n☔️ Running tests on Clojure" (clojure-version) "/ JVM" (System/getProperty "java.version"))
 
@@ -76,9 +76,36 @@
            (category-info :category-b)))))
 
 (deftest category-comparator-test
-  (testing "Sorting"
+  (testing "Sorting categories - sort"
+    (is (= '(:category-a :category-a :category-a-special :category-a-special :category-b :category-b :creative-commons :creative-commons :category-x :category-x :uncategorised :uncategorised)
+            (sort category-comparator [:uncategorised :creative-commons :category-a-special :category-x :category-a :category-a :category-b :category-x :uncategorised :creative-commons :category-b :category-a-special]))))
+  (testing "Sorting categories - sort-by"
     (is (= '(:category-a :category-a :category-a-special :category-a-special :category-b :category-b :creative-commons :creative-commons :category-x :category-x :uncategorised :uncategorised)
             (sort-by identity category-comparator [:uncategorised :creative-commons :category-a-special :category-x :category-a :category-a :category-b :category-x :uncategorised :creative-commons :category-b :category-a-special])))))
+
+(deftest license-comparator-test
+  (testing "Sorting licenses by their category - sort"
+    (is (= '("Apache-2.0")
+            (sort license-comparator ["Apache-2.0"])))
+    (is (= '("Apache-2.0" "Apache-2.0")
+            (sort license-comparator ["Apache-2.0" "Apache-2.0"])))
+    (is (= '("Apache-2.0" "GPL-3.0")
+            (sort license-comparator ["Apache-2.0" "GPL-3.0"])))
+    (is (= '("Apache-2.0" "GPL-3.0")
+            (sort license-comparator ["GPL-3.0" "Apache-2.0"])))
+    (is (= '("Unlicense" "Apache-2.0" "CC-PDDC" "MPL-1.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "IPL-1.0" "MPL-1.1" "SPL-1.0" "OSL-3.0"
+             "EPL-2.0" "MPL-2.0" "CDDL-1.1" "LGPL-3.0" "GPL-2.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "LGPL-2.0" "LGPL-2.1" "BSD-4-Clause"
+             "BAR" "FU")
+            (sort license-comparator ["MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
+                                      "MPL-1.1" "SPL-1.0" "Apache-2.0" "OSL-3.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "EPL-2.0" "LGPL-2.0"
+                                      "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"]))))
+  (testing "Sorting licenses by their category - sort-by"
+    (is (= '("Unlicense" "Apache-2.0" "CC-PDDC" "MPL-1.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "IPL-1.0" "MPL-1.1" "SPL-1.0" "OSL-3.0"
+             "EPL-2.0" "MPL-2.0" "CDDL-1.1" "LGPL-3.0" "GPL-2.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "LGPL-2.0" "LGPL-2.1" "BSD-4-Clause"
+             "BAR" "FU")
+            (sort-by identity license-comparator ["MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
+                                                  "MPL-1.1" "SPL-1.0" "Apache-2.0" "OSL-3.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "EPL-2.0" "LGPL-2.0"
+                                                  "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"])))))
 
 (deftest categories-test
   (testing "Categories"

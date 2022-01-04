@@ -70,6 +70,11 @@
   [l r]
   (compare (get category-order l 99) (get category-order r 99)))
 
+(defn license-comparator
+  "A comparator for licenses, based on their ASF categories."
+  [l r]
+  (compare (get category-order (category l) 99) (get category-order (category r) 99)))
+
 (def categories
   "The set of categories, ordered by category-comparator."
   (apply (partial sorted-set-by category-comparator) (keys category-order)))
