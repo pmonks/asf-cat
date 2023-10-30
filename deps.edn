@@ -17,7 +17,8 @@
 ;
 
 {:paths ["src" "resources"]
+ :deps {com.github.pmonks/clj-spdx  {:mvn/version "1.0.107"}
+        com.github.pmonks/lice-comb {:mvn/version "2.0.191"}}
  :aliases
-   {:build {:deps       {io.github.clojure/tools.build {:git/tag "v0.9.3" :git/sha "e537cd1"}
-                         com.github.pmonks/pbr         {:mvn/version "RELEASE"}}
+   {:build {:deps {com.github.pmonks/pbr {:mvn/version "RELEASE"}}
             :ns-default pbr.build}}}

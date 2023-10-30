@@ -17,39 +17,49 @@
 ;
 
 (ns asf-cat.api
-  "A micro library that provides a Clojure implementation of the Apache Software Foundation's 3rd Party License Policy (https://www.apache.org/legal/resolved.html)."
-  (:require [clojure.string  :as s]
-            [clojure.java.io :as io]
-            [clojure.edn     :as edn]))
+  "A micro library that provides a Clojure implementation of the Apache Software
+  Foundation's 3rd Party License Policy (https://www.apache.org/legal/resolved.html)."
+  (:require [clojure.string     :as s]
+            [clojure.java.io    :as io]
+            [clojure.edn        :as edn]
+            [spdx.expressions   :as sexp]
+            [lice-comb.matching :as lcm]))
 
 (def ^:private category-data (edn/read (java.io.PushbackReader. (io/reader (io/resource "asf-cat/categories.edn")))))
 
 (def policy-uri
-  "The URI (as a string) of the Apache Software Foundation's 3rd Party License Policy"
+  "The URI (as a string) of the Apache Software Foundation's 3rd Party License
+  Policy"
   "https://www.apache.org/legal/resolved.html")
 
-(defn category
-  "Given a license-id (which should be a SPDX license id or one of a very small number of supported non-SPDX license ids), returns one of:
+(defn license-category
+  "Given a license-id (which should be a SPDX license id or one of a very small
+  number of supported non-SPDX license ids), returns one of:
 
   nil                 - when license-id is nil, empty or blank
   :category-a         - see https://www.apache.org/legal/resolved.html#category-a
-  :category-a-special - see https://www.apache.org/legal/resolved.html and scroll to the appropriate section
+  :category-a-special - see https://www.apache.org/legal/resolved.html and
+                        scroll to the appropriate section
   :category-b         - see https://www.apache.org/legal/resolved.html#category-b
-  :creative-commons   - see https://www.apache.org/legal/resolved.html#cc-by (may be any category - further manual investigation required)
+  :creative-commons   - see https://www.apache.org/legal/resolved.html#cc-by
+                        (may be any category - further manual investigation
+                        required)
   :category-x         - see https://www.apache.org/legal/resolved.html#category-x
-  :uncategorised      - the ASF category could not be determined for this license"
+  :uncategorised      - the ASF category of license-id could not be determined"
   [license-id]
   (when-not (s/blank? license-id)
-    (let [asf-cat (get category-data (s/trim license-id))]
-      (cond asf-cat                                                asf-cat
-            (= "NON-SPDX-Public-Domain" license-id)                :category-a-special  ; Non-SPDX identifier; see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
-            (= "public domain"          (s/lower-case license-id)) :category-a-special  ; ditto
-            (s/starts-with? license-id  "CC-BY-NC-")               :category-x          ; See https://www.apache.org/legal/resolved.html#category-x
-            (s/starts-with? license-id  "CC-BY-")                  :creative-commons    ; Various categories; see https://www.apache.org/legal/resolved.html#cc-by
-            :else                                                  :uncategorised))))
+    (if-let [asf-cat (get category-data (s/trim license-id))]
+      asf-cat
+      (cond (lcm/public-domain? license-id)               :category-a-special  ; See https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
+            (= "public domain" (s/lower-case license-id)) :category-a-special  ; ditto
+            (lcm/proprietary-commercial? license-id)      :category-x          ; See https://www.apache.org/legal/resolved.html#criteria (specifically point #1)
+            (s/starts-with? license-id "CC-BY-NC-")       :category-x          ; See https://www.apache.org/legal/resolved.html#category-x
+            (s/starts-with? license-id "CC-BY-")          :creative-commons    ; Various categories; see https://www.apache.org/legal/resolved.html#cc-by
+            :else                                         :uncategorised))))
 
 (def ^{:arglists '([category])} category-info
-  "Returns information on a category as a map with the keys :name and :url (both strings)."
+  "Returns information on a category as a map with the keys :name and :url (both
+  strings)."
   {:category-a         {:name "Category A"                :url "https://www.apache.org/legal/resolved.html#category-a"}
    :category-a-special {:name "Category A (with caveats)" :url "https://www.apache.org/legal/resolved.html#category-a"}
    :category-b         {:name "Category B"                :url "https://www.apache.org/legal/resolved.html#category-b"}
@@ -66,21 +76,55 @@
    :uncategorised      6})
 
 (defn category-comparator
-  "A comparator for ASF category keywords."
+  "A comparator for ASF category keywords, defined as being this ordering:
+  1. :category-a
+  2. :category-a-special
+  3. :category-b
+  4. :creative-commons
+  5. :category-x
+  6. :uncategorised"
   [l r]
   (compare (get category-order l 99) (get category-order r 99)))
 
 (defn license-comparator
-  "A comparator for licenses, based on their ASF categories."
+  "A comparator for license identifiers, based on their ASF categories (see category-comparator)."
   [l r]
-  (compare (get category-order (category l) 99) (get category-order (category r) 99)))
+  (compare (get category-order (license-category l) 99) (get category-order (license-category r) 99)))
 
 (def categories
   "The set of categories, ordered by category-comparator."
   (apply (partial sorted-set-by category-comparator) (keys category-order)))
 
 (defn least-category
-  "Returns the least category for the given sequence of license-ids."
+  "Returns the lowest (best) category for the given sequence of license-ids."
   [license-ids]
   (when (seq license-ids)
-    (first (sort-by category-order (distinct (map category (distinct (seq license-ids))))))))
+    (first (sort-by category-order (distinct (map license-category (distinct (seq license-ids))))))))
+
+(defn most-category
+  "Returns the highest (worst) category for the given sequence of license-ids."
+  [license-ids]
+  (when (seq license-ids)
+    (first (reverse (sort-by category-order (distinct (map license-category (distinct (seq license-ids)))))))))
+
+(defn- expression-category-impl
+  "Internal implementation of expression-category."
+  [parsed-expr]
+  (cond
+    (sequential? parsed-expr)
+      (let [op         (first parsed-expr)
+            exprs      (rest  parsed-expr)
+            categories (sort-by category-order (distinct (map expression-category-impl exprs)))]
+        (case op
+          :or  (first categories)
+          :and (last  categories)))
+
+    (map? parsed-expr)
+      (license-category (first (sexp/extract-ids parsed-expr)))))
+
+(defn expression-category
+  "Given an SPDX license expression, returns the overall ASF category of that
+  expression.  Results are as for `category`."
+  [spdx-expr]
+  (when-let [parsed-expr (sexp/parse spdx-expr)]
+    (expression-category-impl parsed-expr)))
