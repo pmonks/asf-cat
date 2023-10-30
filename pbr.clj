@@ -16,16 +16,12 @@
 ; SPDX-License-Identifier: Apache-2.0
 ;
 
-(def lib 'com.github.pmonks/asf-cat)
-
 #_{:clj-kondo/ignore [:unresolved-namespace]}
-(def version (format "2.0.%s" (b/git-count-revs nil)))
-
 (defn set-opts
   [opts]
   (assoc opts
-         :lib          lib
-         :version      version
+         :lib          'com.github.pmonks/asf-cat
+         :version      (pbr/calculate-version 2 0)
          :write-pom    true
          :validate-pom true
          :pom          {:description      "A micro library that provides a Clojure implementation of the Apache Software Foundation's 3rd Party License Policy (https://www.apache.org/legal/resolved.html)."
