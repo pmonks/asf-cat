@@ -32,31 +32,6 @@
   Policy"
   "https://www.apache.org/legal/resolved.html")
 
-(defn license-category
-  "Given a license-id (which should be a SPDX license id or one of a very small
-  number of supported non-SPDX license ids), returns one of:
-
-  nil                 - when license-id is nil, empty or blank
-  :category-a         - see https://www.apache.org/legal/resolved.html#category-a
-  :category-a-special - see https://www.apache.org/legal/resolved.html and
-                        scroll to the appropriate section
-  :category-b         - see https://www.apache.org/legal/resolved.html#category-b
-  :creative-commons   - see https://www.apache.org/legal/resolved.html#cc-by
-                        (may be any category - further manual investigation
-                        required)
-  :category-x         - see https://www.apache.org/legal/resolved.html#category-x
-  :uncategorised      - the ASF category of license-id could not be determined"
-  [license-id]
-  (when-not (s/blank? license-id)
-    (if-let [asf-cat (get category-data (s/trim license-id))]
-      asf-cat
-      (cond (lcm/public-domain? license-id)               :category-a-special  ; See https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
-            (= "public domain" (s/lower-case license-id)) :category-a-special  ; ditto
-            (lcm/proprietary-commercial? license-id)      :category-x          ; See https://www.apache.org/legal/resolved.html#criteria (specifically point #1)
-            (s/starts-with? license-id "CC-BY-NC-")       :category-x          ; See https://www.apache.org/legal/resolved.html#category-x
-            (s/starts-with? license-id "CC-BY-")          :creative-commons    ; Various categories; see https://www.apache.org/legal/resolved.html#cc-by
-            :else                                         :uncategorised))))
-
 (def ^{:arglists '([category])} category-info
   "Returns information on a category as a map with the keys :name and :url (both
   strings)."
@@ -86,26 +61,40 @@
   [l r]
   (compare (get category-order l 99) (get category-order r 99)))
 
-(defn license-comparator
-  "A comparator for license identifiers, based on their ASF categories (see category-comparator)."
-  [l r]
-  (compare (get category-order (license-category l) 99) (get category-order (license-category r) 99)))
-
 (def categories
   "The set of categories, ordered by category-comparator."
   (apply (partial sorted-set-by category-comparator) (keys category-order)))
 
-(defn least-category
-  "Returns the lowest (best) category for the given sequence of license-ids."
-  [license-ids]
-  (when (seq license-ids)
-    (first (sort-by category-order (distinct (map license-category (distinct (seq license-ids))))))))
+(defn license-category
+  "Given an SPDX license identifier (or 'Public Domain', which is not a valid
+  SPDX identifier but is special cased by asf-cat), returns one of:
 
-(defn most-category
-  "Returns the highest (worst) category for the given sequence of license-ids."
-  [license-ids]
-  (when (seq license-ids)
-    (first (reverse (sort-by category-order (distinct (map license-category (distinct (seq license-ids)))))))))
+  nil                 - when license-id is nil, empty or blank
+  :category-a         - see https://www.apache.org/legal/resolved.html#category-a
+  :category-a-special - see https://www.apache.org/legal/resolved.html and
+                        scroll to the appropriate section
+  :category-b         - see https://www.apache.org/legal/resolved.html#category-b
+  :creative-commons   - see https://www.apache.org/legal/resolved.html#cc-by
+                        (may be any category - further manual investigation
+                        required)
+  :category-x         - see https://www.apache.org/legal/resolved.html#category-x
+  :uncategorised      - the ASF category of license-id could not be determined"
+  [license-id]
+  (when-not (s/blank? license-id)
+    (if-let [asf-cat (get category-data (s/trim license-id))]
+      asf-cat
+      (cond (lcm/public-domain? license-id)               :category-a-special  ; See https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
+            (= "public domain" (s/lower-case license-id)) :category-a-special  ; ditto
+            (lcm/proprietary-commercial? license-id)      :category-x          ; See https://www.apache.org/legal/resolved.html#criteria (specifically point #1)
+            (s/starts-with? license-id "CC-BY-NC-")       :category-x          ; See https://www.apache.org/legal/resolved.html#category-x
+            (s/starts-with? license-id "CC-BY-")          :creative-commons    ; Various categories; see https://www.apache.org/legal/resolved.html#cc-by
+            :else                                         :uncategorised))))
+
+(defn license-comparator
+  "A comparator for SPDX license identifiers, based on their ASF categories (see
+  `category-comparator`)."
+  [l r]
+  (compare (get category-order (license-category l) 99) (get category-order (license-category r) 99)))
 
 (defn- expression-category-impl
   "Internal implementation of expression-category."
@@ -128,3 +117,43 @@
   [spdx-expr]
   (when-let [parsed-expr (sexp/parse spdx-expr)]
     (expression-category-impl parsed-expr)))
+
+(defn least-category
+  "Returns the lowest (best) category in the given sequence of categories."
+  [categories]
+  (when (seq categories)
+    (first (sort-by category-order categories))))
+
+(defn most-category
+  "Returns the highest (worst) category for the given sequence of categories."
+  [categories]
+  (when (seq categories)
+    (last (sort-by category-order categories))))
+
+(defn licenses-least-category
+  "Returns the lowest (best) category in the given sequence of SPDX license
+  identifiers."
+  [license-ids]
+  (when (seq license-ids)
+    (least-category (distinct (filter identity (map license-category (distinct (seq license-ids))))))))
+
+(defn licenses-most-category
+  "Returns the highest (worst) category for the given sequence of SPDX license
+  identifiers."
+  [license-ids]
+  (when (seq license-ids)
+    (most-category (distinct (filter identity (map license-category (distinct (seq license-ids))))))))
+
+(defn expressions-least-category
+  "Returns the lowest (best) category in the given sequence of SPDX license
+  expressions."
+  [expressions]
+  (when (seq expressions)
+    (least-category (distinct (filter identity (map expression-category (distinct (seq expressions))))))))
+
+(defn expressions-most-category
+  "Returns the highest (worst) category for the given sequence of SPDX license
+  expressions."
+  [expressions]
+  (when (seq expressions)
+    (most-category (distinct (filter identity (map expression-category (distinct (seq expressions))))))))

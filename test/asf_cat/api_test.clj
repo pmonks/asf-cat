@@ -18,18 +18,20 @@
 
 (ns asf-cat.api-test
   (:require [clojure.test :refer [deftest testing is]]
-            [asf-cat.api  :refer [license-category expression-category category-info category-comparator license-comparator categories least-category]]))
+            [asf-cat.api  :refer [license-category expression-category category-info category-comparator
+                                  license-comparator categories least-category most-category licenses-least-category
+                                  licenses-most-category expressions-least-category expressions-most-category]]))
 
 (println "\n☔️ Running tests on Clojure" (clojure-version) "/ JVM" (System/getProperty "java.version"))
 
 (deftest license-category-test
-  (testing "Nil, empty or blank license-ids"
+  (testing "Nil, empty or blank license ids"
     (is (nil? (license-category nil)))
     (is (nil? (license-category "")))
     (is (nil? (license-category "       ")))
     (is (nil? (license-category "\n")))
     (is (nil? (license-category "\t"))))
-  (testing "Select SPDX license-ids"
+  (testing "Select SPDX license ids"
     (is (= :category-a         (license-category "Apache-2.0")))
     (is (= :category-a         (license-category "         Apache-2.0         ")))  ; Test whitespace
     (is (= :category-a         (license-category "BSD-3-Clause")))
@@ -46,10 +48,14 @@
     (is (= :creative-commons   (license-category "CC-BY-4.0")))
     (is (= :creative-commons   (license-category "CC-BY-SA-4.0")))
     (is (= :creative-commons   (license-category "CC-BY-ND-4.0")))
+    (is (= :category-b         (license-category "CDDL-1.0")))
+    (is (= :category-b         (license-category "CDDL-1.1")))
     (is (= :category-x         (license-category "BSD-4-Clause")))
     (is (= :category-x         (license-category "BSD-4-Clause-Shortened")))
     (is (= :category-x         (license-category "GPL-2.0")))
     (is (= :category-x         (license-category "GPL-2.0-with-classpath-exception")))
+    (is (= :category-x         (license-category "AGPL-1.0")))
+    (is (= :category-x         (license-category "AGPL-3.0")))
     (is (= :category-x         (license-category "LGPL-2.0")))
     (is (= :category-x         (license-category "LGPL-2.1")))
     (is (= :category-x         (license-category "LGPL-2.1-or-later")))
@@ -57,7 +63,7 @@
     (is (= :category-x         (license-category "CC-BY-NC-SA-3.0")))
     (is (= :category-x         (license-category "CC-BY-NC-SA-2.0-UK")))
     (is (= :uncategorised      (license-category "Beerware"))))
-  (testing "Non-SPDX license-ids"
+  (testing "Non-SPDX license ids"
     (is (= :uncategorised      (license-category "NON-SPDX-JDOM")))
     (is (= :category-a-special (license-category "Public domain")))
     (is (= :category-a-special (license-category "LicenseRef-lice-comb-PUBLIC-DOMAIN")))
@@ -150,35 +156,95 @@
            categories))))
 
 (deftest least-category-test
-  (testing "nil or empty license-ids"
+  (testing "nil or empty"
     (is (= nil (least-category nil)))
     (is (= nil (least-category [])))
     (is (= nil (least-category '())))
     (is (= nil (least-category #{}))))
-  (testing "Populated license-ids (vectors)"
-    (is (= :category-a         (least-category ["Apache-2.0"])))
-    (is (= :category-a         (least-category ["GPL-3.0" "Apache-2.0"])))
-    (is (= :category-a-special (least-category ["Public Domain" "GPL-3.0"])))
-    (is (= :category-b         (least-category ["EPL-2.0" "GPL-3.0"])))
-    (is (= :creative-commons   (least-category ["CC-BY-SA-4.0" "GPL-3.0"])))
-    (is (= :category-x         (least-category ["AGPL-2.0" "GPL-3.0"])))
-    (is (= :category-x         (least-category ["GPL-2.0" "BAR"])))
-    (is (= :uncategorised      (least-category ["FOO" "BAR"]))))
-  (testing "Populated license-ids (sets)"
-    (is (= :category-a         (least-category #{"Apache-2.0"})))
-    (is (= :category-a         (least-category #{"GPL-3.0" "Apache-2.0"})))
-    (is (= :category-a-special (least-category #{"Public Domain" "GPL-3.0"})))
-    (is (= :category-b         (least-category #{"EPL-2.0" "GPL-3.0"})))
-    (is (= :creative-commons   (least-category #{"CC-BY-SA-4.0" "GPL-3.0"})))
-    (is (= :category-x         (least-category #{"AGPL-2.0" "GPL-3.0"})))
-    (is (= :category-x         (least-category #{"GPL-2.0" "BAR"})))
-    (is (= :uncategorised      (least-category #{"FOO" "BAR"}))))
-  (testing "Large set of license-ids"
+  (testing "Categories"
+    (is (= :category-a    (least-category [:category-a])))
+    (is (= :category-b    (least-category [:category-b])))
+    (is (= :uncategorised (least-category [:uncategorised])))
+    (is (= :category-a    (least-category [:category-a :category-a :category-a])))
+    (is (= :category-b    (least-category [:category-b :uncategorised :category-x])))))
+
+(deftest most-category-test
+  (testing "nil or empty"
+    (is (= nil (most-category nil)))
+    (is (= nil (most-category [])))
+    (is (= nil (most-category '())))
+    (is (= nil (most-category #{}))))
+  (testing "Categories"
+    (is (= :category-a    (most-category [:category-a])))
+    (is (= :category-b    (most-category [:category-b])))
+    (is (= :uncategorised (most-category [:uncategorised])))
+    (is (= :category-a    (most-category [:category-a :category-a :category-a])))
+    (is (= :uncategorised (most-category [:category-b :uncategorised :category-x])))))
+
+(deftest licenses-least-category-test
+  (testing "nil or empty license ids"
+    (is (= nil (licenses-least-category nil)))
+    (is (= nil (licenses-least-category [])))
+    (is (= nil (licenses-least-category '())))
+    (is (= nil (licenses-least-category #{}))))
+  (testing "License ids"
+    (is (= :category-a         (licenses-least-category ["Apache-2.0"])))
+    (is (= :category-a         (licenses-least-category '("GPL-3.0" "Apache-2.0"))))
+    (is (= :category-a-special (licenses-least-category #{"Public Domain" "GPL-3.0"})))
+    (is (= :category-b         (licenses-least-category ["EPL-2.0" "GPL-3.0"])))
+    (is (= :creative-commons   (licenses-least-category ["CC-BY-SA-4.0" "GPL-3.0"])))
+    (is (= :category-x         (licenses-least-category ["AGPL-1.0" "GPL-3.0"])))
+    (is (= :category-x         (licenses-least-category ["GPL-2.0" "BAR"])))
+    (is (= :uncategorised      (licenses-least-category ["FOO" "BAR"]))))
+  (testing "Large set of license ids"
     (is (= :category-a
-           (least-category #{"MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
-                            "MPL-1.1" "SPL-1.0" "Apache-2.0" "OSL-3.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "EPL-2.0" "LGPL-2.0"
-                            "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"}))))
-  (testing "Vector containing duplicate license-ids"
+           (licenses-least-category #{"MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
+                                      "MPL-1.1" "SPL-1.0" "Apache-2.0" "OSL-3.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "EPL-2.0" "LGPL-2.0"
+                                      "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"}))))
+  (testing "Vector containing duplicate license ids"
     (is (= :category-a
-           (least-category ["AGPL-3.0" "Apache-2.0" "Apache-2.0" "Apache-2.0" "AGPL-3.0" "AGPL-3.0" "Apache-2.0"
-                            "AGPL-3.0" "AGPL-3.0" "Apache-2.0"])))))
+           (licenses-least-category ["AGPL-3.0" "Apache-2.0" "Apache-2.0" "Apache-2.0" "AGPL-3.0" "AGPL-3.0" "Apache-2.0"
+                                     "AGPL-3.0" "AGPL-3.0" "Apache-2.0"])))))
+
+(deftest licenses-most-category-test
+  (testing "nil or empty license ids"
+    (is (= nil (licenses-most-category nil)))
+    (is (= nil (licenses-most-category [])))
+    (is (= nil (licenses-most-category '())))
+    (is (= nil (licenses-most-category #{}))))
+  (testing "License ids"
+    (is (= :category-a         (licenses-most-category ["Apache-2.0"])))
+    (is (= :category-x         (licenses-most-category '("GPL-3.0" "Apache-2.0"))))
+    (is (= :category-a-special (licenses-most-category #{"Public Domain" "Apache-2.0"})))
+    (is (= :category-b         (licenses-most-category ["EPL-2.0" "Apache-2.0"])))
+    (is (= :creative-commons   (licenses-most-category ["CC-BY-SA-4.0" "Apache-2.0"])))
+    (is (= :category-x         (licenses-most-category ["AGPL-1.0" "GPL-3.0"])))
+    (is (= :uncategorised      (licenses-most-category ["GPL-2.0" "BAR"])))
+    (is (= :uncategorised      (licenses-most-category ["FOO" "BAR"]))))
+  (testing "Large set of license ids"
+    (is (= :uncategorised
+           (licenses-most-category #{"MPL-1.0" "Unlicense" "LGPL-3.0" "CDDL-1.0" "CPL-1.0" "EPL-1.0" "BAR" "IPL-1.0" "GPL-2.0"
+                                     "MPL-1.1" "SPL-1.0" "Apache-2.0" "OSL-3.0" "GPL-1.0" "GPL-3.0" "AGPL-3.0" "EPL-2.0" "LGPL-2.0"
+                                     "LGPL-2.1" "MPL-2.0" "BSD-4-Clause" "FU" "CC-PDDC" "CDDL-1.1"}))))
+  (testing "Vector containing duplicate license ids"
+    (is (= :category-x
+           (licenses-most-category ["AGPL-3.0" "Apache-2.0" "Apache-2.0" "Apache-2.0" "AGPL-3.0" "AGPL-3.0" "Apache-2.0"
+                                    "AGPL-3.0" "AGPL-3.0" "Apache-2.0"])))))
+
+(deftest expressions-least-category-test
+  (testing "nil or empty expressions"
+    (is (= nil (expressions-least-category nil)))
+    (is (= nil (expressions-least-category [])))
+    (is (= nil (expressions-least-category '())))
+    (is (= nil (expressions-least-category #{}))))
+  (testing "Expressions")
+    (is (= :creative-commons (expressions-least-category ["GPL-3.0 OR CC-BY-4.0" "Apache-2.0 AND CC-BY-4.0"]))))
+
+(deftest expressions-most-category-test
+  (testing "nil or empty expressions"
+    (is (= nil (expressions-most-category nil)))
+    (is (= nil (expressions-most-category [])))
+    (is (= nil (expressions-most-category '())))
+    (is (= nil (expressions-most-category #{}))))
+  (testing "Expressions")
+    (is (= :category-x (expressions-most-category ["GPL-3.0 AND CC-BY-4.0" "Apache-2.0 OR CC-BY-4.0"]))))
