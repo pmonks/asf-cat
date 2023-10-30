@@ -104,6 +104,7 @@
   "AGPL-1.0"                           :category-x                              ; Note this license is not related to the GNU AGPL
   "AGPL-1.0-only"                      :category-x                              ; Note this license is not related to the GNU AGPL
   "AGPL-1.0-or-later"                  :category-x                              ; Note this license is not related to the GNU AGPL
+  ; Note: there is no AGPL-2.0(-*) in SPDX
   "AGPL-3.0"                           :category-x
   "AGPL-3.0-only"                      :category-x
   "AGPL-3.0-or-later"                  :category-x
