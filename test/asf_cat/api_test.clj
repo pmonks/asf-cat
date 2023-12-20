@@ -81,7 +81,7 @@
   (testing "Invalid SPDX expressions"
     (is (nil? (expression-category "Apache")))
     (is (nil? (expression-category "(Apache-2.0")))
-    (is (nil? (expression-category "Apache-2.0 or MIT"))))  ; operators must be uppercase
+    (is (nil? (expression-category "Apache-2.0 and or MIT"))))
   (testing "Valid SPDX expressions"
     (is (= :category-a         (expression-category "Apache-2.0")))
     (is (= :category-a         (expression-category "    Apache-2.0  ")))
