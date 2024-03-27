@@ -64,8 +64,8 @@ $ deps-try com.github.pmonks/asf-cat
 (asf/expression-category "Apache-2.0 AND GPL-3.0 WITH Classpath-exception-2.0")
 ;=> :category-x
 
-;; lice-comb specific LicenseRefs
-(asf/license-category "LicenseRef-lice-comb-PUBLIC-DOMAIN")
+;; Non-standard license "identifiers"
+(asf/license-category "Public domain")
 ;=> :category-a-special
 
 (asf/license-category "LicenseRef-lice-comb-PROPRIETARY-COMMERCIAL")
