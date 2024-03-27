@@ -22,11 +22,12 @@
   (assoc opts
          :lib          'com.github.pmonks/asf-cat
          :version      (pbr/calculate-version 2 0)
+         :prod-branch  "release"
          :write-pom    true
          :validate-pom true
          :pom          {:description      "A micro library that provides a Clojure implementation of the Apache Software Foundation's 3rd Party License Policy (https://www.apache.org/legal/resolved.html)."
                         :url              "https://github.com/pmonks/asf-cat"
-                        :licenses         [:license   {:name "Apache License 2.0" :url "http://www.apache.org/licenses/LICENSE-2.0.html"}]
+                        :licenses         [:license   {:name "Apache-2.0" :url "http://www.apache.org/licenses/LICENSE-2.0.html"}]
                         :developers       [:developer {:id "pmonks" :name "Peter Monks" :email "pmonks+asf-cat@gmail.com"}]
                         :scm              {:url "https://github.com/pmonks/asf-cat" :connection "scm:git:git://github.com/pmonks/asf-cat.git" :developer-connection "scm:git:ssh://git@github.com/pmonks/asf-cat.git"}
                         :issue-management {:system "github" :url "https://github.com/pmonks/asf-cat/issues"}}))
