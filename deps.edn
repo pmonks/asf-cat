@@ -17,7 +17,7 @@
 ;
 
 {:paths ["src" "resources"]
- :deps {com.github.pmonks/lice-comb {:mvn/version "2.0.264"}}
+ :deps {com.github.pmonks/lice-comb {:mvn/version "2.0.270"}}
  :aliases
    {:build {:deps {com.github.pmonks/pbr {:mvn/version "RELEASE"}}
             :ns-default pbr.build}}}
