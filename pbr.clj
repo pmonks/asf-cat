@@ -22,6 +22,7 @@
   (assoc opts
          :lib          'com.github.pmonks/asf-cat
          :version      (pbr/calculate-version 2 0)
+         :prod-branch  "release"
          :write-pom    true
          :validate-pom true
          :pom          {:description      "A micro library that provides a Clojure implementation of the Apache Software Foundation's 3rd Party License Policy (https://www.apache.org/legal/resolved.html)."
