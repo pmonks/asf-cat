@@ -34,9 +34,10 @@
 
 (def ^{:arglists '([category])} category-info
   "Returns information on a category as a map with the keys :name and :url (both
-  strings)."
+  strings).  :name is a human-readable name of the category and :url is a link
+  to the ASF's documentation on the category."
   {:category-a         {:name "Category A"                :url "https://www.apache.org/legal/resolved.html#category-a"}
-   :category-a-special {:name "Category A (with caveats)" :url "https://www.apache.org/legal/resolved.html#category-a"}
+   :category-a-special {:name "Category A (with caveats)" :url "https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works"}
    :category-b         {:name "Category B"                :url "https://www.apache.org/legal/resolved.html#category-b"}
    :creative-commons   {:name "Creative Commons Licenses" :url "https://www.apache.org/legal/resolved.html#cc-by"}
    :category-x         {:name "Category X"                :url "https://www.apache.org/legal/resolved.html#category-x"}
@@ -66,19 +67,23 @@
   (apply (partial sorted-set-by category-comparator) (keys category-order)))
 
 (defn license-category
-  "Given an SPDX license identifier (or 'Public Domain', which is not a valid
-  SPDX identifier but is special cased by asf-cat), returns one of:
+  "Given an SPDX license identifier, a lice-comb LicenseRef, or 'Public Domain'
+  (which is not a valid SPDX identifier but is special cased by asf-cat),
+  returns one of:
 
   nil                 - when license-id is nil, empty or blank
   :category-a         - see https://www.apache.org/legal/resolved.html#category-a
-  :category-a-special - see https://www.apache.org/legal/resolved.html and
-                        scroll to the appropriate section
+  :category-a-special - see https://www.apache.org/legal/resolved.html#handling-public-domain-licensed-works
   :category-b         - see https://www.apache.org/legal/resolved.html#category-b
   :creative-commons   - see https://www.apache.org/legal/resolved.html#cc-by
                         (may be any category - further manual investigation
                         required)
   :category-x         - see https://www.apache.org/legal/resolved.html#category-x
-  :uncategorised      - the ASF category of license-id could not be determined"
+  :uncategorised      - the ASF category of license-id could not be determined
+
+  Note: as of v2.0, expression-category is the preferred primary API for using
+  asf-cat, since every SPDX license identifier is (by definition) also a valid
+  SPDX expression."
   [license-id]
   (when-not (s/blank? license-id)
     (if-let [asf-cat (get category-data (s/trim license-id))]
@@ -113,7 +118,7 @@
 
 (defn expression-category
   "Given an SPDX license expression, returns the overall ASF category of that
-  expression.  Results are as for `category`."
+  expression.  Possible result values are as for license-category."
   [spdx-expr]
   (when-let [parsed-expr (sexp/parse spdx-expr)]
     (expression-category-impl parsed-expr)))
@@ -131,15 +136,15 @@
     (last (sort-by category-order categories))))
 
 (defn licenses-least-category
-  "Returns the lowest (best) category in the given sequence of SPDX license
-  identifiers."
+  "Returns the lowest (best) category in the given sequence of licenses (as per
+  license-category)."
   [license-ids]
   (when (seq license-ids)
     (least-category (distinct (filter identity (map license-category (distinct (seq license-ids))))))))
 
 (defn licenses-most-category
-  "Returns the highest (worst) category for the given sequence of SPDX license
-  identifiers."
+  "Returns the highest (worst) category for the given sequence of licenses (as
+  per license-category)."
   [license-ids]
   (when (seq license-ids)
     (most-category (distinct (filter identity (map license-category (distinct (seq license-ids))))))))
