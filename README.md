@@ -1,13 +1,15 @@
-| | | |
-|---:|:---:|:---:|
-| [**release**](https://github.com/pmonks/asf-cat/tree/release) | [![CI](https://github.com/pmonks/asf-cat/actions/workflows/ci.yml/badge.svg?branch=release)](https://github.com/pmonks/asf-cat/actions?query=workflow%3ACI+branch%3Arelease) | [![Dependencies](https://github.com/pmonks/asf-cat/actions/workflows/dependencies.yml/badge.svg?branch=release)](https://github.com/pmonks/asf-cat/actions?query=workflow%3Adependencies+branch%3Arelease) |
-| [**dev**](https://github.com/pmonks/asf-cat/tree/dev) | [![CI](https://github.com/pmonks/asf-cat/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/pmonks/asf-cat/actions?query=workflow%3ACI+branch%3Adev) | [![Dependencies](https://github.com/pmonks/asf-cat/actions/workflows/dependencies.yml/badge.svg?branch=dev)](https://github.com/pmonks/asf-cat/actions?query=workflow%3Adependencies+branch%3Adev) |
-
-[![Latest Version](https://img.shields.io/clojars/v/com.github.pmonks/asf-cat)](https://clojars.org/com.github.pmonks/asf-cat/) [![License](https://img.shields.io/github/license/pmonks/asf-cat.svg)](https://github.com/pmonks/asf-cat/blob/release/LICENSE) [![Open Issues](https://img.shields.io/github/issues/pmonks/asf-cat.svg)](https://github.com/pmonks/asf-cat/issues) [![Vulnerabilities](https://github.com/pmonks/asf-cat/workflows/vulnerabilities/badge.svg)](https://pmonks.github.io/asf-cat/nvd/dependency-check-report.html)
-
 <img alt="asf-cat logo: Apache Software Foundation feather logo with a cat in silhouette reaching towards it" align="right" width="25%" src="https://raw.githubusercontent.com/pmonks/asf-cat/main/asf-cat-logo.png">
 
 # asf-cat
+
+[![CI](https://github.com/pmonks/asf-cat/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/pmonks/asf-cat/actions?query=workflow%3ACI+branch%3Adev)
+[![Dependencies](https://github.com/pmonks/asf-cat/actions/workflows/dependencies.yml/badge.svg?branch=dev)](https://github.com/pmonks/asf-cat/actions?query=workflow%3Adependencies+branch%3Adev)
+[![Vulnerabilities](https://github.com/pmonks/asf-cat/workflows/vulnerabilities/badge.svg)](https://pmonks.github.io/asf-cat/nvd/dependency-check-report.html)
+<br/>
+[![Latest Version](https://img.shields.io/clojars/v/com.github.pmonks/asf-cat)](https://clojars.org/com.github.pmonks/asf-cat/)
+[![License](https://img.shields.io/github/license/pmonks/asf-cat.svg)](https://github.com/pmonks/asf-cat/blob/release/LICENSE)
+[![Open Issues](https://img.shields.io/github/issues/pmonks/asf-cat.svg)](https://github.com/pmonks/asf-cat/issues)
+![Maintained](https://badges.ws/badge/?label=maintained&value=yes,+at+author's+discretion)
 
 A micro library that provides a Clojure implementation of the [Apache Software Foundation's 3rd Party License Policy](https://www.apache.org/legal/resolved.html).
 
